@@ -1,0 +1,71 @@
+{
+  "info": {
+    "name": "Financial Ledger API",
+    "description": "Complete Postman collection for Financial Ledger API with real UUIDs from the database.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Account",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"test-user-01\",\n  \"type\": \"checking\",\n  \"currency\": \"USD\"\n}"
+        },
+        "url": "http://localhost:5000/accounts"
+      }
+    },
+    {
+      "name": "Get Account Details",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:5000/accounts/8f185004-31e4-4c3e-86d4-5883dab8a4a8"
+      }
+    },
+    {
+      "name": "Get Account Ledger",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:5000/accounts/8f185004-31e4-4c3e-86d4-5883dab8a4a8/ledger"
+      }
+    },
+    {
+      "name": "Transfer Money (Actual DB UUIDs)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"source_account_id\": \"8f185004-31e4-4c3e-86d4-5883dab8a4a8\",\n  \"destination_account_id\": \"8e459d94-aa0a-4161-b394-aa31ac9bc989\",\n  \"amount\": 100,\n  \"currency\": \"USD\",\n  \"description\": \"Payment between accounts\"\n}"
+        },
+        "url": "http://localhost:5000/transfer"
+      }
+    },
+    {
+      "name": "Deposit Money",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"account_id\": \"8f185004-31e4-4c3e-86d4-5883dab8a4a8\",\n  \"amount\": 500,\n  \"currency\": \"USD\",\n  \"description\": \"Test deposit\"\n}"
+        },
+        "url": "http://localhost:5000/deposits"
+      }
+    },
+    {
+      "name": "Withdraw Money",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"account_id\": \"8f185004-31e4-4c3e-86d4-5883dab8a4a8\",\n  \"amount\": 50,\n  \"currency\": \"USD\",\n  \"description\": \"ATM Withdrawal\"\n}"
+        },
+        "url": "http://localhost:5000/withdrawals"
+      }
+    }
+  ]
+}

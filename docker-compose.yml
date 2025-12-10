@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ledgerdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./migrations:/migrations
+
+  app:
+    build: .
+    command: npm start
+    volumes:
+      - .:/workspace
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=1234
+      - DATABASE_NAME=ledgerdb
+    depends_on:
+      - postgres
+
+volumes:
+  db_data:
