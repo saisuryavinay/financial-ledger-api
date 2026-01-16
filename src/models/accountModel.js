@@ -1,6 +1,6 @@
 import { pool } from "../config/db.js";
 
-// Example: get all accounts
+// Get all accounts
 export const getAccounts = async () => {
   try {
     const result = await pool.query("SELECT * FROM accounts");
@@ -11,12 +11,23 @@ export const getAccounts = async () => {
   }
 };
 
-// Example: create a new account
-export const createAccount = async (name, balance) => {
+// Get account by ID
+export const getAccountById = async (accountId) => {
+  try {
+    const result = await pool.query("SELECT * FROM accounts WHERE id = $1", [accountId]);
+    return result.rows[0];
+  } catch (err) {
+    console.error("Error fetching account:", err);
+    throw err;
+  }
+};
+
+// Create a new account
+export const createAccount = async ({ user_id, account_type, currency, status = 'active' }) => {
   try {
     const result = await pool.query(
-      "INSERT INTO accounts (name, balance) VALUES ($1, $2) RETURNING *",
-      [name, balance]
+      "INSERT INTO accounts (user_id, account_type, currency, status) VALUES ($1, $2, $3, $4) RETURNING *",
+      [user_id, account_type, currency, status]
     );
     return result.rows[0];
   } catch (err) {

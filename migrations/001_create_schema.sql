@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS accounts (
     user_id uuid REFERENCES users(id) ON DELETE CASCADE,
     account_type text NOT NULL,
     currency text NOT NULL,
-    balance numeric(20,6) DEFAULT 0,
     status text NOT NULL DEFAULT 'active',
     created_at timestamptz DEFAULT now()
 );
@@ -46,12 +45,11 @@ CREATE TABLE IF NOT EXISTS ledger_entries (
 
 INSERT INTO users (name, email) VALUES ('Test User', 'test@example.com');
 
-INSERT INTO accounts (user_id, account_type, currency, balance)
+INSERT INTO accounts (user_id, account_type, currency)
 VALUES (
     (SELECT id FROM users WHERE email='test@example.com'),
     'checking',
-    'USD',
-    1000
+    'USD'
 );
 
 
